@@ -13,25 +13,19 @@ export default function DailyTemperature({ whetherHistory }) {
   return (
     <View
       style={{
-        minHeight: "10%",
+        minHeight: "15%",
       }}
     >
-      <View
-      // style={{
-      //   minHeight: "15%",
-      // }}
+      {/* <Text
+        style={{
+          fontSize: 16,
+          fontWeight: 700,
+          color: theme.dark,
+          fontStyle: "italic",
+        }}
       >
-        <Text
-          style={{
-            fontSize: 16,
-            fontWeight: 700,
-            color: theme.dark,
-            fontStyle: "italic",
-          }}
-        >
-          Every Hour
-        </Text>
-      </View>
+        Every Hour
+      </Text> */}
       <View>
         {hours?.map((item, index) => {
           console.log("item", item);
@@ -54,13 +48,12 @@ export default function DailyTemperature({ whetherHistory }) {
                       }}
                     >
                       {item.temp_c}
-                      {/* <FontAwesome5
+                      <FontAwesome5
                         name="temperature-high"
                         size={24}
                         color="black"
-                      /> */}
+                      />
                     </Text>
-                    {/* <Ionicons name="water-outline" size={24} color="black" /> */}
                     <Text
                       style={{
                         fontSize: 10,

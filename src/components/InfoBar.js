@@ -7,6 +7,33 @@ import { AntDesign } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 
 export default function InfoBar({ whetherDetails }) {
+  let data = [
+    {
+      name: "Humidity",
+      icon: <Ionicons name="water-outline" size={24} color="black" />,
+      value: whetherDetails?.current?.humidity,
+    },
+    {
+      name: "cloud",
+      icon: <AntDesign name="cloudo" size={24} color="black" />,
+      value: whetherDetails?.current?.humidity,
+    },
+    {
+      name: "Wind",
+      icon: <Feather name="wind" size={24} color="black" />,
+      value: whetherDetails?.current?.wind_kph,
+    },
+    {
+      name: "UV",
+      icon: <Ionicons name="md-sunny-outline" size={24} color="black" />,
+      value: whetherDetails?.current?.uv,
+    },
+    {
+      name: "Pressure",
+      icon: <MaterialIcons name="compress" size={24} color="black" />,
+      value: whetherDetails?.current?.pressure_mb,
+    },
+  ];
   return (
     <View
       style={{
@@ -14,123 +41,76 @@ export default function InfoBar({ whetherDetails }) {
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",
+        marginBottom: 20,
       }}
     >
-      <View style={styles.whetherDetailItem}>
-        <Text
-          style={{
-            fontSize: 10,
-            fontWeight: 700,
-            color: theme.light,
-            fontStyle: "italic",
-          }}
-        >
-          Humidity
-        </Text>
-        <Ionicons name="water-outline" size={24} color="black" />
-        <Text
-          style={{
-            fontSize: 10,
-            fontWeight: 700,
-            color: theme.light,
-            fontStyle: "italic",
-          }}
-        >
-          {whetherDetails?.current?.humidity}
-        </Text>
-      </View>
-      <View style={styles.whetherDetailItem}>
-        <Text
-          style={{
-            fontSize: 10,
-            fontWeight: 700,
-            color: theme.light,
-            fontStyle: "italic",
-          }}
-        >
-          Cloud
-        </Text>
-        <AntDesign name="cloudo" size={24} color="black" />
-        <Text
-          style={{
-            fontSize: 10,
-            fontWeight: 700,
-            color: theme.light,
-            fontStyle: "italic",
-          }}
-        >
-          {whetherDetails?.current?.cloud}
-        </Text>
-      </View>
-      <View style={styles.whetherDetailItem}>
-        <Text
-          style={{
-            fontSize: 10,
-            fontWeight: 700,
-            color: theme.light,
-            fontStyle: "italic",
-          }}
-        >
-          Wind
-        </Text>
-        <Feather name="wind" size={24} color="black" />
-        <Text
-          style={{
-            fontSize: 10,
-            fontWeight: 700,
-            color: theme.light,
-            fontStyle: "italic",
-          }}
-        >
-          {whetherDetails?.current?.wind_kph}km/h
-        </Text>
-      </View>
-      <View style={styles.whetherDetailItem}>
-        <Text
-          style={{
-            fontSize: 10,
-            fontWeight: 700,
-            color: theme.light,
-            fontStyle: "italic",
-          }}
-        >
-          UV
-        </Text>
-        <Ionicons name="md-sunny-outline" size={24} color="black" />
-        <Text
-          style={{
-            fontSize: 10,
-            fontWeight: 700,
-            color: theme.light,
-            fontStyle: "italic",
-          }}
-        >
-          {whetherDetails?.current?.uv}
-        </Text>
-      </View>
-      <View style={styles.whetherDetailItem}>
-        <Text
-          style={{
-            fontSize: 10,
-            fontWeight: 700,
-            color: theme.light,
-            fontStyle: "italic",
-          }}
-        >
-          Pressure
-        </Text>
-        <MaterialIcons name="compress" size={24} color="black" />
-        <Text
-          style={{
-            fontSize: 10,
-            fontWeight: 700,
-            color: theme.light,
-            fontStyle: "italic",
-          }}
-        >
-          {whetherDetails?.current?.pressure_mb}
-        </Text>
-      </View>
+      {data?.map((item, index) => {
+        return (
+          <View
+            key={index}
+            style={{
+              minWidth: "15%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              alignSelf: "center",
+              backgroundColor: theme.light,
+              borderRadius: 10,
+              shadowColor: "#000",
+              shadowOffset: {
+                width: 0,
+                height: 2,
+              },
+              shadowOpacity: 0.25,
+              shadowRadius: 3.84,
+              elevation: 5,
+              padding: 6,
+            }}
+          >
+            <View
+              style={{
+                width: "100%",
+                alignItems: "center",
+                justifyContent: "center",
+                alignSelf: "center",
+                backgroundColor: theme.light,
+                borderRadius: 10,
+                shadowColor: "#000",
+                shadowOffset: {
+                  width: 0,
+                  height: 2,
+                },
+                shadowOpacity: 0.25,
+                shadowRadius: 3.84,
+                elevation: 5,
+                padding: 8,
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 10,
+                  fontWeight: 700,
+                  color: theme.dark,
+                  fontStyle: "italic",
+                }}
+              >
+                {item.name}
+              </Text>
+              {item.icon}
+              <Text
+                style={{
+                  fontSize: 10,
+                  fontWeight: 700,
+                  color: theme.dark,
+                  fontStyle: "italic",
+                }}
+              >
+                {item.value}
+              </Text>
+            </View>
+          </View>
+        );
+      })}
     </View>
   );
 }

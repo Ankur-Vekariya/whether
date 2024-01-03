@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import theme from "./src/utils/theme";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
@@ -9,7 +9,6 @@ import InfoBar from "./src/components/InfoBar";
 import DailyTemperature from "./src/components/DailyTemperature";
 
 export default function App() {
-  const [currentHour, setCurrentHour] = useState(Number(dayjs().format("HH")));
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [whetherDetails, setWhetherDetails] = useState({});
@@ -26,8 +25,9 @@ export default function App() {
     }
 
     let location = await Location.getCurrentPositionAsync({});
-    setLocation(location);
+    console.log("location", location);
     getWhether();
+    setLocation(location);
   };
 
   useEffect(() => {
@@ -40,14 +40,18 @@ export default function App() {
         `https://api.weatherapi.com/v1/current.json?q=${location?.coords.latitude}%2C${location?.coords.longitude}&key=04267816411547ae95b124656231902`
       )
       .then(function (response) {
-        console.log(response.data);
+        console.log("whetherData---------------------", response.data);
         setWhetherDetails(response.data);
         getHistory();
       })
       .catch(function (error) {
-        console.log(error.message);
+        console.log(error);
       });
   };
+
+  // setTimeout(() => {
+  //   getWhether()
+  // }, 100);
 
   const getHistory = () => {
     axios
@@ -65,103 +69,70 @@ export default function App() {
       })
       .catch(function (error) {
         console.log("history error", error);
+        setErrorMsg(error);
       });
   };
 
   return (
     <View style={styles.container}>
-      <View style={{ paddingBottom: 10 }}>
-        <Text
-          style={{
-            fontSize: 26,
-            color: theme.accent,
-            fontStyle: "italic",
-          }}
-        >
-          Good
-          {currentHour > 5 && currentHour < 12
-            ? " Morning"
-            : currentHour > 12 && currentHour < 17
-            ? " Afternoon"
-            : currentHour > 17 && currentHour < 24
-            ? " Evening"
-            : " Night"}
-        </Text>
-      </View>
-      {/* <View
+      <View
         style={{
-          minHeight: "30%",
-          backgroundColor: theme.accent,
-          borderRadius: 30,
+          borderRadius: 20,
+          marginBottom: 10,
+          padding: 10,
+          backgroundColor: theme.lightBlue,
           shadowColor: "#000",
           shadowOffset: {
             width: 0,
-            height: 2,
+            height: 3,
           },
-          shadowOpacity: 0.25,
-          shadowRadius: 3.84,
+          shadowOpacity: 0.27,
+          shadowRadius: 4.65,
 
-          elevation: 5,
-          padding: 10,
-          marginBottom: 20,
-        }}
-      >
-        <Text
-          style={{
-            fontSize: 75,
-            fontWeight: 700,
-            color: theme.light,
-            fontStyle: "italic",
-          }}
-        >
-          {whetherDetails?.current?.temp_c}
-        </Text>
-        <Text
-          style={{
-            fontSize: 15,
-            color: theme.light,
-            fontStyle: "italic",
-            marginBottom: 5,
-          }}
-        >
-          {whetherDetails?.location?.name},{whetherDetails?.location?.region},
-          {whetherDetails?.location?.country}
-        </Text>
-        <InfoBar whetherDetails={whetherDetails} />
-      </View> */}
-      <View
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-          minHeight: "30%",
+          elevation: 6,
         }}
       >
         <View
           style={{
-            width: 250,
-            height: 250,
-            borderRadius: 250 / 2,
-            backgroundColor: theme.accent,
-            shadowColor: "#000",
-            shadowOffset: {
-              width: 0,
-              height: 5,
-            },
-            shadowOpacity: 0.34,
-            shadowRadius: 6.27,
-
-            elevation: 10,
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            marginBottom: 10,
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 16,
+              color: theme.dark,
+              fontStyle: "italic",
+              textAlignVertical: "bottom",
+            }}
+          >
+            {whetherDetails?.location?.name},{whetherDetails?.location?.region}
+          </Text>
+          <Text
+            style={{
+              fontSize: 20,
+              color: theme.dark,
+              fontStyle: "italic",
+            }}
+          >
+            {dayjs().date()}-{dayjs().format("MMM")}-{dayjs().year()}
+          </Text>
+        </View>
+        <View
+          style={{
             justifyContent: "center",
             alignItems: "center",
-            borderColor: theme.light,
-            borderWidth: 0.5,
+            minHeight: "30%",
+            marginBottom: 20,
           }}
         >
           <View
             style={{
-              width: 250 - 30,
-              height: 250 - 30,
-              borderRadius: 250 - 30 / 2,
+              width: 250,
+              height: 250,
+              borderRadius: 250 / 2,
               backgroundColor: theme.accent,
               shadowColor: "#000",
               shadowOffset: {
@@ -172,37 +143,63 @@ export default function App() {
               shadowRadius: 6.27,
 
               elevation: 10,
-              padding: 10,
               justifyContent: "center",
               alignItems: "center",
               borderColor: theme.light,
               borderWidth: 0.5,
             }}
           >
-            <Text
+            <TouchableOpacity
+              onPress={() => {
+                getLocation();
+              }}
               style={{
-                fontSize: 70,
-                fontWeight: 700,
-                color: theme.light,
-                fontStyle: "italic",
+                width: 250 - 30,
+                height: 250 - 30,
+                borderRadius: 250 - 30 / 2,
+                backgroundColor: theme.accent,
+                shadowColor: "#000",
+                shadowOffset: {
+                  width: 0,
+                  height: 5,
+                },
+                shadowOpacity: 0.34,
+                shadowRadius: 6.27,
+
+                elevation: 10,
+                padding: 10,
+                justifyContent: "center",
+                alignItems: "center",
+                borderColor: theme.light,
+                borderWidth: 0.5,
               }}
             >
-              {whetherDetails?.current?.temp_c}
-            </Text>
+              <Text
+                style={{
+                  fontSize: 70,
+                  fontWeight: 700,
+                  color: theme.light,
+                  fontStyle: "italic",
+                }}
+              >
+                {whetherDetails?.current?.temp_c}
+              </Text>
+            </TouchableOpacity>
           </View>
         </View>
+        <InfoBar whetherDetails={whetherDetails} />
       </View>
-
       {loading ? (
         <View>
           <Text>Waiting...</Text>
+          <Text>{errorMsg}</Text>
         </View>
       ) : (
         <View
           style={{
             minHeight: "10%",
             backgroundColor: theme.accent,
-            borderRadius: 30,
+            borderRadius: 10,
             shadowColor: "#000",
             shadowOffset: {
               width: 0,
@@ -218,25 +215,6 @@ export default function App() {
           }}
         >
           <DailyTemperature whetherHistory={whetherHistory} />
-          {/* <View
-            style={{
-              minHeight: "10%",
-              backgroundColor: theme.accent,
-              borderRadius: 30,
-              shadowColor: "#000",
-              shadowOffset: {
-                width: 0,
-                height: 2,
-              },
-              shadowOpacity: 0.25,
-              shadowRadius: 3.84,
-
-              elevation: 5,
-              padding: 10,
-            }}
-          >
-            
-          </View> */}
         </View>
       )}
 
