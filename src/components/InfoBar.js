@@ -37,7 +37,7 @@ export default function InfoBar({ whetherDetails }) {
   return (
     <View
       style={{
-        minHeight: "10%",
+        height: "10%",
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",
@@ -49,7 +49,8 @@ export default function InfoBar({ whetherDetails }) {
           <View
             key={index}
             style={{
-              minWidth: "15%",
+              minWidth: "18%",
+              height: "100%",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -64,50 +65,30 @@ export default function InfoBar({ whetherDetails }) {
               shadowOpacity: 0.25,
               shadowRadius: 3.84,
               elevation: 5,
-              padding: 6,
+              padding: 10,
             }}
           >
-            <View
+            <Text
               style={{
-                width: "100%",
-                alignItems: "center",
-                justifyContent: "center",
-                alignSelf: "center",
-                backgroundColor: theme.light,
-                borderRadius: 10,
-                shadowColor: "#000",
-                shadowOffset: {
-                  width: 0,
-                  height: 2,
-                },
-                shadowOpacity: 0.25,
-                shadowRadius: 3.84,
-                elevation: 5,
-                padding: 8,
+                fontSize: 10,
+                fontWeight: 700,
+                color: theme.dark,
+                fontStyle: "italic",
               }}
             >
-              <Text
-                style={{
-                  fontSize: 10,
-                  fontWeight: 700,
-                  color: theme.dark,
-                  fontStyle: "italic",
-                }}
-              >
-                {item.name}
-              </Text>
-              {item.icon}
-              <Text
-                style={{
-                  fontSize: 10,
-                  fontWeight: 700,
-                  color: theme.dark,
-                  fontStyle: "italic",
-                }}
-              >
-                {item.value}
-              </Text>
-            </View>
+              {item.name}
+            </Text>
+            {item.icon}
+            <Text
+              style={{
+                fontSize: 10,
+                fontWeight: 700,
+                color: theme.dark,
+                fontStyle: "italic",
+              }}
+            >
+              {item.value}
+            </Text>
           </View>
         );
       })}

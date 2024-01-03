@@ -6,39 +6,55 @@ import { FontAwesome5 } from "@expo/vector-icons";
 export default function DailyTemperature({ whetherHistory }) {
   let hours;
   if (!!whetherHistory) {
-    let hour = whetherHistory.forecastday.map((item) => item?.hour);
-    hours = hour.map((item) => item);
+    let hour = whetherHistory?.forecastday?.map((item) => item?.hour);
+    hours = hour?.map((item) => item);
   }
 
   return (
-    <View
-      style={{
-        minHeight: "15%",
-      }}
-    >
-      {/* <Text
-        style={{
-          fontSize: 16,
-          fontWeight: 700,
-          color: theme.dark,
-          fontStyle: "italic",
-        }}
-      >
-        Every Hour
-      </Text> */}
-      <View>
-        {hours?.map((item, index) => {
-          console.log("item", item);
+    <View style={{}}>
+      {hours?.map((item, index) => {
+        console.log("item", item);
 
-          return (
-            <FlatList
-              showsHorizontalScrollIndicator={false}
-              horizontal
-              data={item}
-              renderItem={({ item }) => {
-                console.log(dayjs(item.time).format("HH"));
-                return (
-                  <View style={styles.whetherDetailItem} key={index}>
+        return (
+          <FlatList
+            showsHorizontalScrollIndicator={false}
+            horizontal
+            data={item}
+            renderItem={({ item }) => {
+              console.log(dayjs(item.time).format("HH"));
+              return (
+                <View
+                  style={{
+                    height: "40%",
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    marginBottom: 20,
+                    marginHorizontal: 5,
+                  }}
+                >
+                  <View
+                    key={index}
+                    style={{
+                      width: 60,
+                      height: "100%",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      alignSelf: "center",
+                      backgroundColor: theme.accent,
+                      borderRadius: 10,
+                      shadowColor: "#000",
+                      shadowOffset: {
+                        width: 0,
+                        height: 2,
+                      },
+                      shadowOpacity: 0.25,
+                      shadowRadius: 3.84,
+                      elevation: 5,
+                      padding: 10,
+                    }}
+                  >
                     <Text
                       style={{
                         fontSize: 16,
@@ -48,12 +64,12 @@ export default function DailyTemperature({ whetherHistory }) {
                       }}
                     >
                       {item.temp_c}
-                      <FontAwesome5
-                        name="temperature-high"
-                        size={24}
-                        color="black"
-                      />
                     </Text>
+                    <FontAwesome5
+                      name="temperature-high"
+                      size={24}
+                      color="black"
+                    />
                     <Text
                       style={{
                         fontSize: 10,
@@ -65,29 +81,54 @@ export default function DailyTemperature({ whetherHistory }) {
                       {dayjs(item.time).format("HH")}
                     </Text>
                   </View>
-                );
-              }}
-              keyExtractor={(item) => item.id}
-            />
-          );
-        })}
-      </View>
+                </View>
+                // <View style={styles.whetherDetailItem} key={index}>
+                //   <Text
+                //     style={{
+                //       fontSize: 16,
+                //       fontWeight: 700,
+                //       color: theme.light,
+                //       fontStyle: "italic",
+                //     }}
+                //   >
+                //     {item.temp_c}
+                //   </Text>
+                //   <FontAwesome5
+                //     name="temperature-high"
+                //     size={24}
+                //     color="black"
+                //   />
+                //   <Text
+                //     style={{
+                //       fontSize: 10,
+                //       fontWeight: 700,
+                //       color: theme.light,
+                //       fontStyle: "italic",
+                //     }}
+                //   >
+                //     {dayjs(item.time).format("HH")}
+                //   </Text>
+                // </View>
+              );
+            }}
+            keyExtractor={(item) => item.id}
+          />
+        );
+      })}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   whetherDetailItem: {
-    width: 70,
+    width: 60,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     alignSelf: "center",
     borderRadius: 10,
-    paddingVertical: 10,
-    paddingHorizontal: 4,
+    padding: 10,
     marginHorizontal: 5,
-    marginVertical: 10,
     backgroundColor: theme.accent,
     shadowColor: "#000",
     shadowOffset: {

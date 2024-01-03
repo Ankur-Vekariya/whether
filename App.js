@@ -77,62 +77,69 @@ export default function App() {
     <View style={styles.container}>
       <View
         style={{
-          borderRadius: 20,
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
           marginBottom: 10,
-          padding: 10,
-          backgroundColor: theme.lightBlue,
-          shadowColor: "#000",
-          shadowOffset: {
-            width: 0,
-            height: 3,
-          },
-          shadowOpacity: 0.27,
-          shadowRadius: 4.65,
-
-          elevation: 6,
+        }}
+      >
+        <Text
+          style={{
+            fontSize: 16,
+            color: theme.dark,
+            fontStyle: "italic",
+            textAlignVertical: "bottom",
+          }}
+        >
+          {whetherDetails?.location?.name},{whetherDetails?.location?.region}
+        </Text>
+        <Text
+          style={{
+            fontSize: 20,
+            color: theme.dark,
+            fontStyle: "italic",
+          }}
+        >
+          {dayjs().date()}-{dayjs().format("MMM")}-{dayjs().year()}
+        </Text>
+      </View>
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: "30%",
+          marginBottom: 20,
         }}
       >
         <View
           style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-            marginBottom: 10,
-          }}
-        >
-          <Text
-            style={{
-              fontSize: 16,
-              color: theme.dark,
-              fontStyle: "italic",
-              textAlignVertical: "bottom",
-            }}
-          >
-            {whetherDetails?.location?.name},{whetherDetails?.location?.region}
-          </Text>
-          <Text
-            style={{
-              fontSize: 20,
-              color: theme.dark,
-              fontStyle: "italic",
-            }}
-          >
-            {dayjs().date()}-{dayjs().format("MMM")}-{dayjs().year()}
-          </Text>
-        </View>
-        <View
-          style={{
+            width: 250,
+            height: 250,
+            borderRadius: 250 / 2,
+            backgroundColor: theme.accent,
+            shadowColor: "#000",
+            shadowOffset: {
+              width: 0,
+              height: 5,
+            },
+            shadowOpacity: 0.34,
+            shadowRadius: 6.27,
+
+            elevation: 10,
             justifyContent: "center",
             alignItems: "center",
-            minHeight: "30%",
-            marginBottom: 20,
+            borderColor: theme.light,
+            borderWidth: 0.5,
           }}
         >
-          <View
+          <TouchableOpacity
+            onPress={() => {
+              getLocation();
+            }}
             style={{
-              width: 250,
-              height: 250,
-              borderRadius: 250 / 2,
+              width: 250 - 30,
+              height: 250 - 30,
+              borderRadius: 250 - 30 / 2,
               backgroundColor: theme.accent,
               shadowColor: "#000",
               shadowOffset: {
@@ -143,81 +150,30 @@ export default function App() {
               shadowRadius: 6.27,
 
               elevation: 10,
+              padding: 10,
               justifyContent: "center",
               alignItems: "center",
               borderColor: theme.light,
               borderWidth: 0.5,
             }}
           >
-            <TouchableOpacity
-              onPress={() => {
-                getLocation();
-              }}
+            <Text
               style={{
-                width: 250 - 30,
-                height: 250 - 30,
-                borderRadius: 250 - 30 / 2,
-                backgroundColor: theme.accent,
-                shadowColor: "#000",
-                shadowOffset: {
-                  width: 0,
-                  height: 5,
-                },
-                shadowOpacity: 0.34,
-                shadowRadius: 6.27,
-
-                elevation: 10,
-                padding: 10,
-                justifyContent: "center",
-                alignItems: "center",
-                borderColor: theme.light,
-                borderWidth: 0.5,
+                fontSize: 70,
+                fontWeight: 700,
+                color: theme.light,
+                fontStyle: "italic",
               }}
             >
-              <Text
-                style={{
-                  fontSize: 70,
-                  fontWeight: 700,
-                  color: theme.light,
-                  fontStyle: "italic",
-                }}
-              >
-                {whetherDetails?.current?.temp_c}
-              </Text>
-            </TouchableOpacity>
-          </View>
+              {whetherDetails?.current?.temp_c}
+            </Text>
+          </TouchableOpacity>
         </View>
-        <InfoBar whetherDetails={whetherDetails} />
       </View>
-      {loading ? (
-        <View>
-          <Text>Waiting...</Text>
-          <Text>{errorMsg}</Text>
-        </View>
-      ) : (
-        <View
-          style={{
-            minHeight: "10%",
-            backgroundColor: theme.accent,
-            borderRadius: 10,
-            shadowColor: "#000",
-            shadowOffset: {
-              width: 0,
-              height: 2,
-            },
-            shadowOpacity: 0.25,
-            shadowRadius: 3.84,
+      <InfoBar whetherDetails={whetherDetails} />
+      {/* <InfoBar whetherDetails={whetherDetails} /> */}
 
-            elevation: 5,
-            padding: 10,
-            borderColor: theme.light,
-            borderWidth: 0.5,
-          }}
-        >
-          <DailyTemperature whetherHistory={whetherHistory} />
-        </View>
-      )}
-
+      <DailyTemperature whetherHistory={whetherHistory} />
       <StatusBar style="auto" />
     </View>
   );
@@ -229,7 +185,10 @@ const styles = StyleSheet.create({
     backgroundColor: theme.light,
 
     paddingTop: 40,
+    paddingBottom: 10,
     paddingHorizontal: 10,
+    borderColor: "red",
+    borderWidth: 1,
   },
   image: {
     flex: 1,
