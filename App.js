@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View, Image } from "react-native";
 import theme from "./src/utils/theme";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
@@ -13,6 +13,8 @@ export default function App() {
   const [errorMsg, setErrorMsg] = useState(null);
   const [whetherDetails, setWhetherDetails] = useState({});
   const [whetherHistory, setWhetherHistory] = useState({});
+  const [marinData, setMarinData] = useState({});
+
   const [loading, setLoading] = useState(true);
 
   const getLocation = async () => {
@@ -43,6 +45,7 @@ export default function App() {
         console.log("whetherData---------------------", response.data);
         setWhetherDetails(response.data);
         getHistory();
+        getMarinData();
       })
       .catch(function (error) {
         console.log(error);
@@ -73,73 +76,79 @@ export default function App() {
       });
   };
 
+  const getMarinData = () => {
+    axios
+      .get(
+        `https://api.weatherapi.com/v1/astronomy.json?q=${
+          location?.coords.latitude
+        }%2C${location?.coords.longitude}&dt=${dayjs().format(
+          "YYYY-MM-DD"
+        )}&key=04267816411547ae95b124656231902`
+      )
+      .then(function (response) {
+        console.log("history data", response.data);
+        setMarinData(response.data.forecast);
+        setLoading(false);
+      })
+      .catch(function (error) {
+        console.log("history error", error);
+        setErrorMsg(error);
+      });
+  };
+
   return (
-    <View style={styles.container}>
-      <View
+    <>
+      <Image
+        source={require("./assets/splash.png")}
         style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-          marginBottom: 10,
+          height: "100%",
+          width: "100%",
+          opacity: 0.5,
+          position: "absolute",
         }}
-      >
-        <Text
-          style={{
-            fontSize: 16,
-            color: theme.dark,
-            fontStyle: "italic",
-            textAlignVertical: "bottom",
-          }}
-        >
-          {whetherDetails?.location?.name},{whetherDetails?.location?.region}
-        </Text>
-        <Text
-          style={{
-            fontSize: 20,
-            color: theme.dark,
-            fontStyle: "italic",
-          }}
-        >
-          {dayjs().date()}-{dayjs().format("MMM")}-{dayjs().year()}
-        </Text>
-      </View>
-      <View
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-          minHeight: "30%",
-          marginBottom: 20,
-        }}
-      >
+      />
+      <View style={styles.container}>
         <View
           style={{
-            width: 250,
-            height: 250,
-            borderRadius: 250 / 2,
-            backgroundColor: theme.accent,
-            shadowColor: "#000",
-            shadowOffset: {
-              width: 0,
-              height: 5,
-            },
-            shadowOpacity: 0.34,
-            shadowRadius: 6.27,
-
-            elevation: 10,
-            justifyContent: "center",
-            alignItems: "center",
-            borderColor: theme.light,
-            borderWidth: 0.5,
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            marginBottom: 10,
           }}
         >
-          <TouchableOpacity
-            onPress={() => {
-              getLocation();
-            }}
+          <Text
             style={{
-              width: 250 - 30,
-              height: 250 - 30,
-              borderRadius: 250 - 30 / 2,
+              fontSize: 16,
+              color: theme.dark,
+              fontStyle: "italic",
+              textAlignVertical: "bottom",
+            }}
+          >
+            {whetherDetails?.location?.name},{whetherDetails?.location?.region}
+          </Text>
+          <Text
+            style={{
+              fontSize: 20,
+              color: theme.dark,
+              fontStyle: "italic",
+            }}
+          >
+            {dayjs().date()}-{dayjs().format("MMM")}-{dayjs().year()}
+          </Text>
+        </View>
+        <View
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            minHeight: "30%",
+            marginBottom: 20,
+          }}
+        >
+          <View
+            style={{
+              width: 250,
+              height: 250,
+              borderRadius: 250 / 2,
               backgroundColor: theme.accent,
               shadowColor: "#000",
               shadowOffset: {
@@ -150,45 +159,142 @@ export default function App() {
               shadowRadius: 6.27,
 
               elevation: 10,
-              padding: 10,
               justifyContent: "center",
               alignItems: "center",
               borderColor: theme.light,
               borderWidth: 0.5,
             }}
           >
+            <TouchableOpacity
+              onPress={() => {
+                getLocation();
+              }}
+              style={{
+                width: 250 - 30,
+                height: 250 - 30,
+                borderRadius: 250 - 30 / 2,
+                backgroundColor: theme.accent,
+                shadowColor: "#000",
+                shadowOffset: {
+                  width: 0,
+                  height: 5,
+                },
+                shadowOpacity: 0.34,
+                shadowRadius: 6.27,
+
+                elevation: 10,
+                padding: 10,
+                justifyContent: "center",
+                alignItems: "center",
+                borderColor: theme.light,
+                borderWidth: 0.5,
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 70,
+                  fontWeight: 700,
+                  color: theme.light,
+                  fontStyle: "italic",
+                }}
+              >
+                {whetherDetails?.current?.temp_c}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <InfoBar whetherDetails={whetherDetails} />
+        {/* <DailyTemperature whetherHistory={whetherHistory} /> */}
+        <View
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            marginBottom: 10,
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 14,
+              color: theme.dark,
+              fontStyle: "italic",
+              textAlignVertical: "bottom",
+            }}
+          >
+            Other Locations
+          </Text>
+          <Text
+            style={{
+              fontSize: 14,
+              color: theme.dark,
+              fontStyle: "italic",
+            }}
+          >
+            Add More
+          </Text>
+        </View>
+        <View
+          style={{
+            minWidth: "100%",
+            minHeight: "20%",
+            borderRadius: 20,
+            backgroundColor: theme.lightBlue,
+            shadowColor: "#000",
+            shadowOffset: {
+              width: 0,
+              height: 5,
+            },
+            shadowOpacity: 0.34,
+            shadowRadius: 6.27,
+
+            elevation: 10,
+          }}
+        >
+          <TouchableOpacity
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              padding: 10,
+            }}
+          >
             <Text
               style={{
-                fontSize: 70,
-                fontWeight: 700,
-                color: theme.light,
+                fontSize: 14,
+                color: theme.dark,
+                fontStyle: "italic",
+                textAlignVertical: "bottom",
+              }}
+            >
+              Other Locations
+            </Text>
+            <Text
+              style={{
+                fontSize: 14,
+                color: theme.dark,
                 fontStyle: "italic",
               }}
             >
-              {whetherDetails?.current?.temp_c}
+              Add More
             </Text>
           </TouchableOpacity>
         </View>
+        <StatusBar style="auto" />
       </View>
-      <InfoBar whetherDetails={whetherDetails} />
-      {/* <InfoBar whetherDetails={whetherDetails} /> */}
-
-      <DailyTemperature whetherHistory={whetherHistory} />
-      <StatusBar style="auto" />
-    </View>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: theme.light,
+    // backgroundColor: theme.light,
 
     paddingTop: 40,
     paddingBottom: 10,
     paddingHorizontal: 10,
-    borderColor: "red",
-    borderWidth: 1,
+    // borderColor: "red",
+    // borderWidth: 1,
   },
   image: {
     flex: 1,
