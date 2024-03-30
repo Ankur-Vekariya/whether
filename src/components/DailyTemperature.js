@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 import { FontAwesome5 } from "@expo/vector-icons";
 
 export default function DailyTemperature({ whetherHistory }) {
+  console.log("==========", whetherHistory?.forecastday);
   let hours;
   if (!!whetherHistory) {
     let hour = whetherHistory?.forecastday?.map((item) => item?.hour);
@@ -11,39 +12,48 @@ export default function DailyTemperature({ whetherHistory }) {
   }
 
   return (
-    <View style={{}}>
+    <View
+      style={{
+        borderColor: "red",
+        borderWidth: 1,
+        maxHeight: "25%",
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        // marginBottom: 20,
+        marginRight: 8,
+      }}
+    >
       {hours?.map((item, index) => {
-        console.log("item", item);
-
         return (
           <FlatList
             showsHorizontalScrollIndicator={false}
             horizontal
             data={item}
             renderItem={({ item }) => {
-              console.log(dayjs(item.time).format("HH"));
+              // console.log(dayjs(item.time).format("HH"));
               return (
                 <View
                   style={{
-                    height: "40%",
+                    maxHeight: "100%",
                     display: "flex",
                     flexDirection: "row",
                     justifyContent: "space-between",
-                    marginBottom: 20,
-                    marginHorizontal: 5,
+                    // marginBottom: 20,
+                    marginRight: 8,
                   }}
                 >
                   <View
                     key={index}
                     style={{
-                      width: 60,
+                      width: 80,
                       height: "100%",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
                       alignSelf: "center",
-                      backgroundColor: theme.accent,
-                      borderRadius: 10,
+                      backgroundColor: theme.secondary,
+                      borderRadius: 30,
                       shadowColor: "#000",
                       shadowOffset: {
                         width: 0,
@@ -52,29 +62,28 @@ export default function DailyTemperature({ whetherHistory }) {
                       shadowOpacity: 0.25,
                       shadowRadius: 3.84,
                       elevation: 5,
-                      padding: 10,
                     }}
                   >
                     <Text
                       style={{
-                        fontSize: 16,
+                        fontSize: 20,
                         fontWeight: 700,
-                        color: theme.light,
+                        color: theme.main,
                         fontStyle: "italic",
                       }}
                     >
                       {item.temp_c}
                     </Text>
-                    <FontAwesome5
+                    {/* <FontAwesome5
                       name="temperature-high"
                       size={24}
                       color="black"
-                    />
+                    /> */}
                     <Text
                       style={{
-                        fontSize: 10,
+                        fontSize: 20,
                         fontWeight: 700,
-                        color: theme.light,
+                        color: theme.main,
                         fontStyle: "italic",
                       }}
                     >

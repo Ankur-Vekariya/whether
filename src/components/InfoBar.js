@@ -37,11 +37,25 @@ export default function InfoBar({ whetherDetails }) {
   return (
     <View
       style={{
-        height: "10%",
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",
-        marginBottom: 20,
+        margin: 15,
+        minWidth: "100%",
+        height: "10%",
+        alignItems: "center",
+        justifyContent: "center",
+        alignSelf: "center",
+        backgroundColor: theme.secondary,
+        borderRadius: 30,
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
       }}
     >
       {data?.map((item, index) => {
@@ -49,30 +63,30 @@ export default function InfoBar({ whetherDetails }) {
           <View
             key={index}
             style={{
-              minWidth: "18%",
-              height: "100%",
+              minWidth: "20%",
+              // height: "100%",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               alignSelf: "center",
-              backgroundColor: theme.light,
-              borderRadius: 10,
-              shadowColor: "#000",
-              shadowOffset: {
-                width: 0,
-                height: 2,
-              },
-              shadowOpacity: 0.25,
-              shadowRadius: 3.84,
-              elevation: 5,
-              padding: 10,
+              // backgroundColor: theme.secondary,
+              // borderRadius: 10,
+              // shadowColor: "#000",
+              // shadowOffset: {
+              //   width: 0,
+              //   height: 2,
+              // },
+              // shadowOpacity: 0.25,
+              // shadowRadius: 3.84,
+              // elevation: 5,
+              // padding: 10,
             }}
           >
             <Text
               style={{
                 fontSize: 10,
                 fontWeight: 700,
-                color: theme.dark,
+                // color: theme.dark,
                 fontStyle: "italic",
               }}
             >
@@ -81,7 +95,7 @@ export default function InfoBar({ whetherDetails }) {
             {item.icon}
             <Text
               style={{
-                fontSize: 10,
+                fontSize: 18,
                 fontWeight: 700,
                 color: theme.dark,
                 fontStyle: "italic",

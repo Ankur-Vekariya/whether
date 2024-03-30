@@ -98,7 +98,7 @@ export default function App() {
 
   return (
     <>
-      <Image
+      {/* <Image
         source={require("./assets/splash.png")}
         style={{
           height: "100%",
@@ -106,7 +106,7 @@ export default function App() {
           opacity: 0.5,
           position: "absolute",
         }}
-      />
+      /> */}
       <View style={styles.container}>
         <View
           style={{
@@ -146,10 +146,10 @@ export default function App() {
         >
           <View
             style={{
-              width: 250,
-              height: 250,
-              borderRadius: 250 / 2,
-              backgroundColor: theme.accent,
+              width: 300,
+              height: 300,
+              borderRadius: 300 / 2,
+              backgroundColor: theme.secondary,
               shadowColor: "#000",
               shadowOffset: {
                 width: 0,
@@ -170,10 +170,10 @@ export default function App() {
                 getLocation();
               }}
               style={{
-                width: 250 - 30,
-                height: 250 - 30,
-                borderRadius: 250 - 30 / 2,
-                backgroundColor: theme.accent,
+                width: 300 - 30,
+                height: 300 - 30,
+                borderRadius: 300 - 30 / 2,
+                backgroundColor: theme.secondary,
                 shadowColor: "#000",
                 shadowOffset: {
                   width: 0,
@@ -192,9 +192,9 @@ export default function App() {
             >
               <Text
                 style={{
-                  fontSize: 70,
-                  fontWeight: 700,
-                  color: theme.light,
+                  fontSize: 100,
+                  fontWeight: "700",
+                  color: theme.main,
                   fontStyle: "italic",
                 }}
               >
@@ -204,8 +204,25 @@ export default function App() {
           </View>
         </View>
         <InfoBar whetherDetails={whetherDetails} />
-        {/* <DailyTemperature whetherHistory={whetherHistory} /> */}
-        <View
+        <DailyTemperature whetherHistory={whetherHistory} />
+        <Image
+          style={styles.tinyLogo1}
+          source={require("./assets/cloud-anime.gif")}
+        />
+        <Image
+          style={styles.tinyLogo0}
+          source={require("./assets/cloud-anime.gif")}
+        />
+        {/* <Image
+          style={styles.tinyLogo1}
+          source={require("./assets/cloud-anime.gif")}
+        />
+        <Image
+          style={styles.tinyLogo1}
+          source={require("./assets/cloud-anime.gif")}
+        /> */}
+
+        {/* <View
           style={{
             display: "flex",
             flexDirection: "row",
@@ -278,7 +295,7 @@ export default function App() {
               Add More
             </Text>
           </TouchableOpacity>
-        </View>
+        </View> */}
         <StatusBar style="auto" />
       </View>
     </>
@@ -288,13 +305,10 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: theme.light,
-
+    backgroundColor: theme.main,
     paddingTop: 40,
     paddingBottom: 10,
-    paddingHorizontal: 10,
-    // borderColor: "red",
-    // borderWidth: 1,
+    paddingHorizontal: 15,
   },
   image: {
     flex: 1,
@@ -319,5 +333,18 @@ const styles = StyleSheet.create({
     height: 150,
     borderRadius: 150 / 2,
     backgroundColor: "#FF9800",
+  },
+
+  tinyLogo0: {
+    height: "100%",
+    top: 550,
+    bottom: 0,
+    position: "absolute",
+  },
+  tinyLogo1: {
+    height: "100%",
+    top: 600,
+    bottom: 0,
+    position: "absolute",
   },
 });
