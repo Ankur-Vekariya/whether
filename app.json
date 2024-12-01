@@ -42,8 +42,9 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "d5c01687-6ed1-45ba-a8c2-d2274ce964bc"
+        "projectId": "a17dc3d0-e3eb-40d8-a1b9-8dbc8dae670a"
       }
-    }
+    },
+    "owner": "ankur_vekariya"
   }
 }

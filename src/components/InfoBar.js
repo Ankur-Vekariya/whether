@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 import theme from "../utils/theme";
 import dayjs from "dayjs";
-import { Ionicons } from "@expo/vector-icons";
+import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -25,7 +25,7 @@ export default function InfoBar({ whetherDetails }) {
     },
     {
       name: "UV",
-      icon: <Ionicons name="md-sunny-outline" size={24} color="black" />,
+      icon: <FontAwesome name="arrows" size={24} color="black" />,
       value: whetherDetails?.current?.uv,
     },
     {
@@ -41,21 +41,13 @@ export default function InfoBar({ whetherDetails }) {
         flexDirection: "row",
         justifyContent: "space-between",
         margin: 15,
+        padding: 10,
         minWidth: "100%",
-        height: "10%",
         alignItems: "center",
         justifyContent: "center",
         alignSelf: "center",
         backgroundColor: theme.secondary,
         borderRadius: 30,
-        shadowColor: "#000",
-        shadowOffset: {
-          width: 0,
-          height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5,
       }}
     >
       {data?.map((item, index) => {
@@ -64,29 +56,16 @@ export default function InfoBar({ whetherDetails }) {
             key={index}
             style={{
               minWidth: "20%",
-              // height: "100%",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               alignSelf: "center",
-              // backgroundColor: theme.secondary,
-              // borderRadius: 10,
-              // shadowColor: "#000",
-              // shadowOffset: {
-              //   width: 0,
-              //   height: 2,
-              // },
-              // shadowOpacity: 0.25,
-              // shadowRadius: 3.84,
-              // elevation: 5,
-              // padding: 10,
             }}
           >
             <Text
               style={{
                 fontSize: 10,
                 fontWeight: 700,
-                // color: theme.dark,
                 fontStyle: "italic",
               }}
             >

@@ -28,13 +28,19 @@ export default function App() {
 
     let location = await Location.getCurrentPositionAsync({});
     console.log("location", location);
-    getWhether();
+
     setLocation(location);
   };
 
   useEffect(() => {
     getLocation();
   }, []);
+
+  useEffect(() => {
+    if (location) {
+      getWhether();
+    }
+  }, [location]);
 
   const getWhether = () => {
     axios
@@ -51,10 +57,6 @@ export default function App() {
         console.log(error);
       });
   };
-
-  // setTimeout(() => {
-  //   getWhether()
-  // }, 100);
 
   const getHistory = () => {
     axios
@@ -150,19 +152,8 @@ export default function App() {
               height: 300,
               borderRadius: 300 / 2,
               backgroundColor: theme.secondary,
-              shadowColor: "#000",
-              shadowOffset: {
-                width: 0,
-                height: 5,
-              },
-              shadowOpacity: 0.34,
-              shadowRadius: 6.27,
-
-              elevation: 10,
               justifyContent: "center",
               alignItems: "center",
-              borderColor: theme.light,
-              borderWidth: 0.5,
             }}
           >
             <TouchableOpacity
@@ -170,24 +161,9 @@ export default function App() {
                 getLocation();
               }}
               style={{
-                width: 300 - 30,
-                height: 300 - 30,
-                borderRadius: 300 - 30 / 2,
-                backgroundColor: theme.secondary,
-                shadowColor: "#000",
-                shadowOffset: {
-                  width: 0,
-                  height: 5,
-                },
-                shadowOpacity: 0.34,
-                shadowRadius: 6.27,
-
-                elevation: 10,
                 padding: 10,
                 justifyContent: "center",
                 alignItems: "center",
-                borderColor: theme.light,
-                borderWidth: 0.5,
               }}
             >
               <Text
@@ -213,89 +189,6 @@ export default function App() {
           style={styles.tinyLogo0}
           source={require("./assets/cloud-anime.gif")}
         />
-        {/* <Image
-          style={styles.tinyLogo1}
-          source={require("./assets/cloud-anime.gif")}
-        />
-        <Image
-          style={styles.tinyLogo1}
-          source={require("./assets/cloud-anime.gif")}
-        /> */}
-
-        {/* <View
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-            marginBottom: 10,
-          }}
-        >
-          <Text
-            style={{
-              fontSize: 14,
-              color: theme.dark,
-              fontStyle: "italic",
-              textAlignVertical: "bottom",
-            }}
-          >
-            Other Locations
-          </Text>
-          <Text
-            style={{
-              fontSize: 14,
-              color: theme.dark,
-              fontStyle: "italic",
-            }}
-          >
-            Add More
-          </Text>
-        </View>
-        <View
-          style={{
-            minWidth: "100%",
-            minHeight: "20%",
-            borderRadius: 20,
-            backgroundColor: theme.lightBlue,
-            shadowColor: "#000",
-            shadowOffset: {
-              width: 0,
-              height: 5,
-            },
-            shadowOpacity: 0.34,
-            shadowRadius: 6.27,
-
-            elevation: 10,
-          }}
-        >
-          <TouchableOpacity
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-between",
-              padding: 10,
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 14,
-                color: theme.dark,
-                fontStyle: "italic",
-                textAlignVertical: "bottom",
-              }}
-            >
-              Other Locations
-            </Text>
-            <Text
-              style={{
-                fontSize: 14,
-                color: theme.dark,
-                fontStyle: "italic",
-              }}
-            >
-              Add More
-            </Text>
-          </TouchableOpacity>
-        </View> */}
         <StatusBar style="auto" />
       </View>
     </>
